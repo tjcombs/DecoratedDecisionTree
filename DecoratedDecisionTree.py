@@ -49,6 +49,19 @@ class DecoratedDecisionTreeRegressor:
             self.leaf_models[leaf] = leaf_model
             
     def predict(self, df_X):
+        '''
+
+        Parameters
+        ----------
+        df_X : DataFrame
+            DataFrame containing the features used to train the model
+
+        Returns
+        -------
+        Series
+            The prediction
+
+        '''
         df_X_copy = df_X.copy()
         leaves = self.dtr.apply(df_X_copy)
         # Say what the ordering is so that we can get the same order back
@@ -65,16 +78,4 @@ class DecoratedDecisionTreeRegressor:
             df_out = pd.concat((df_out, df_X_leaf))
         df_out = df_out.sort_values('__ordering', ascending=True)
         return df_out['y']
-            
-
-if __name__ == '__main__':
-    from sklearn.tree import DecisionTreeRegressor
-    from sklearn.linear_model import LinearRegression
-    ddtr = DecoratedDecisionTreeRegressor(DecisionTreeRegressor(max_depth = 2), LinearRegression())
-    
-    data_X = generation[['PLANT_ID', 'DC_POWER', 'AC_POWER', 'DAILY_YIELD']]
-    y = generation['TOTAL_YIELD']
-    
-    ddtr.fit(data_X, y)
-    data_X['y'] = ddtr.predict(data_X)
 
