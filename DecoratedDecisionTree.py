@@ -1,18 +1,24 @@
 import pandas as pd
 from sklearn.base import clone
+import warnings
+warnings.filterwarnings('ignore')
+
 
 class DecoratedDecisionTreeRegressor:
 
     def __init__(self, dtr, decorator):
         '''
-        
+        Creates a decorated decision tree regressor.  A decision tree is fit 
+        according to the supplied DecisionTreeRegressor.  The data on the
+        leaves of the tree are fit according to a supplied decorator
+        which is a regression algorithm.
 
         Parameters
         ----------
         dtr : sklearn.tree.DecisionTreeRegressor
             Decision tree regressor
-        decoration : Regessor
-            Regression algorithm used to fit at the leaves of the tree.
+        decorator : Regessor
+            Regression algorithm used to fit the data at the leaves of the tree.
 
         '''
         self.dtr = dtr
@@ -22,7 +28,7 @@ class DecoratedDecisionTreeRegressor:
     
     def fit(self, df_X, y):
         '''
-        Fits the decorated decision tree regressor
+        Fits the decorated decision tree regressor.
 
         Parameters
         ----------
@@ -59,7 +65,7 @@ class DecoratedDecisionTreeRegressor:
         Returns
         -------
         Series
-            The prediction
+            A series containing the prediction.
 
         '''
         df_X_copy = df_X.copy()
