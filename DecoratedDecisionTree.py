@@ -17,7 +17,7 @@ class DecoratedDecisionTreeRegressor:
         ----------
         dtr : sklearn.tree.DecisionTreeRegressor
             Decision tree regressor
-        decorator : Regessor
+        decorator : Regressor
             Regression algorithm used to fit the data at the leaves of the tree.
 
         '''
